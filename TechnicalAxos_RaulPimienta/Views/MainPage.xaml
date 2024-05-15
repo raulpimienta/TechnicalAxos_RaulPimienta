@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechnicalAxos_RaulPimienta.Views.MainPage"
+             xmlns:viewmodels="clr-namespace:TechnicalAxos_RaulPimienta.ViewModels;assembly=TechnicalAxos_RaulPimienta"
+             xmlns:responses="clr-namespace:TechnicalAxos_RaulPimienta.Models.Responses;assembly=TechnicalAxos_RaulPimienta"
+             x:DataType="viewmodels:MainViewModel">
+    <StackLayout Padding="10">
+        <Label Text="{Binding BundleId}" />
+        <Image Source="{Binding Image}" HeightRequest="300" WidthRequest="300" />
+        <Button Text="Select an image" Command="{Binding SelectImageCommand}"/>
+        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="40" WidthRequest="40"/>
+        <CollectionView ItemsSource="{Binding Countries}" SelectionMode="None" VerticalOptions="FillAndExpand" RemainingItemsThreshold="1" RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="responses:CountryResponse">
+                    <Grid RowDefinitions="*,*,*,*,*,*,*" Padding="5">
+                        <HorizontalStackLayout Grid.Row="0">
+                            <Label FontAttributes="Bold"  Text="Official name:"/>
+                            <Label Text="{Binding name.official}"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1">
+                            <Label FontAttributes="Bold"  Text="Common name:"/>
+                            <Label Text="{Binding name.common}"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2">
+                            <Label FontAttributes="Bold"  Text="Capital:"/>
+                            <Label Text="{Binding CapitalDisplay}"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="3">
+                            <Label FontAttributes="Bold"  Text="Region:"/>
+                            <Label Text="{Binding region}"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="4">
+                            <Label FontAttributes="Bold"  Text="SubRegion:"/>
+                            <Label Text="{Binding subregion}"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="5">
+                            <Label FontAttributes="Bold"  Text="Population:"/>
+                            <Label Text="{Binding population, StringFormat='{0:N0}'}"/>
+                        </HorizontalStackLayout>
+                        <BoxView HeightRequest="1" BackgroundColor="LightGray" Grid.Row="6"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <VerticalStackLayout>
+                    <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" HeightRequest="40" WidthRequest="40" />
+                </VerticalStackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
